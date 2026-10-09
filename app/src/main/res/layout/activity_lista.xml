@@ -9,8 +9,8 @@
     <!-- Logo / Imagen de Registros del Invernadero -->
     <ImageView
         android:id="@+id/imgLogoLista"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="32dp"
         android:scaleType="fitCenter"
         android:src="@drawable/logo_invernadero_registros"
@@ -34,6 +34,8 @@
 
     <!-- Lista de lecturas (ocupando un sector de la pantalla, 65% del alto y 90% del ancho) -->
     <!-- Le pusimos un fondo blanco y un pequeño borde (elevation) para que se distinga del fondo gris -->
+
+    <!-- Botón flotante para agregar una nueva lectura -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLecturas"
         android:layout_width="0dp"
@@ -45,12 +47,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTituloLista"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.9" />
 
-    <!-- Botón flotante para agregar una nueva lectura -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAgregarLectura"
         android:layout_width="wrap_content"
