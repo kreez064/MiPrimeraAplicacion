@@ -9,18 +9,21 @@
     tools:context=".MainActivity">
 
     <!-- Logo del Invernadero / Inicio de Sesión -->
+
+    <!-- Incremento 2: Título de la pantalla ubicado debajo del logo -->
+
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/logo_login"
+        android:layout_marginTop="36dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/logo_login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Incremento 2: Título de la pantalla ubicado debajo del logo -->
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="wrap_content"
