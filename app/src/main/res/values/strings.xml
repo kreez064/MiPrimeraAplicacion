@@ -1,6 +1,6 @@
 <resources>
     <!-- Nombre de la aplicación -->
-    <string name="app_name">MiPrimeraAplicacion</string>
+    <string name="app_name">control invernadero</string>
 
     <!-- Lista de idiomas disponibles para la selección de preferencias del usuario -->
     <string-array name="idiomas">

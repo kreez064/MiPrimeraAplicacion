@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".RegistroActivity">
 
-    <!-- Logo INACAP centrado en la parte superior -->
+    <!-- Logo centrado en la parte superior -->
     <ImageView
         android:id="@+id/imgLogoRegistro"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/logo_inacap"
+        android:src="@drawable/logo_invernadero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
