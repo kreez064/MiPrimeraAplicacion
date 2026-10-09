@@ -1,60 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:padding="24dp"
+    tools:context=".views.FormularioLecturaActivity">
 
-    <!-- Título dinámico de la pantalla -->
+    <!-- Título dinámico de la pantalla (Crear / Editar) -->
     <TextView
         android:id="@+id/txtTituloFormulario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Nueva Lectura"
-        android:textSize="24sp"
+        android:layout_marginTop="24dp"
+        android:text="Nuevo Registro de Invernadero"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Campo de texto para la Descripción -->
-    <EditText
-        android:id="@+id/edtDescripcion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Descripción de la lectura"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTituloFormulario" />
-
-    <!-- Campo de texto numérico para el Valor -->
-    <EditText
-        android:id="@+id/edtValor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Valor (ej. 12.5)"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtDescripcion" />
-
-    <!-- Botón Guardar -->
-    <Button
-        android:id="@+id/btnGuardarLectura"
+    <!-- Campo de Ubicación / Sector -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilUbicacion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Guardar"
-        android:onClick="onGuardarLecturaClick"
-        android:backgroundTint="#4CAF50"
+        android:hint="Ubicación / Sector (Ej. Sector Norte)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtValor" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTituloFormulario">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo de Temperatura -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTemperatura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Temperatura en °C (Ej. 23.5)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilUbicacion">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTemperatura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal|numberSigned" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo de Humedad -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilHumedad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Humedad relativa en % (Ej. 65.0)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilTemperatura">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtHumedad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botón Guardar -->
+    <Button
+        android:id="@+id/btnGuardarRegistro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#4CAF50"
+        android:onClick="onGuardarRegistroClick"
+        android:padding="12dp"
+        android:text="Guardar Registro"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilHumedad" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

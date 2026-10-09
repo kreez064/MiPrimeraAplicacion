@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.miprimeraaplicacion.R
-import com.example.miprimeraaplicacion.models.Lectura
+import com.example.miprimeraaplicacion.models.RegistroInvernadero
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -16,11 +16,12 @@ class FormularioLecturaActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var txtTituloFormulario: TextView
-    private lateinit var edtDescripcion: EditText
-    private lateinit var edtValor: EditText
+    private lateinit var edtUbicacion: EditText
+    private lateinit var edtTemperatura: EditText
+    private lateinit var edtHumedad: EditText
 
-    // Variable para saber si estamos editando (guardará el ID) o creando (será null)
-    private var lecturaIdEditar: String? = null
+    // Variable para saber si estamos editando (contendrá el ID del documento) o creando (null)
+    private var registroIdEditar: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,61 +30,98 @@ class FormularioLecturaActivity : AppCompatActivity() {
         db = Firebase.firestore
 
         txtTituloFormulario = findViewById(R.id.txtTituloFormulario)
-        edtDescripcion = findViewById(R.id.edtDescripcion)
-        edtValor = findViewById(R.id.edtValor)
+        edtUbicacion = findViewById(R.id.edtUbicacion)
+        edtTemperatura = findViewById(R.id.edtTemperatura)
+        edtHumedad = findViewById(R.id.edtHumedad)
 
-        // Revisamos si el Intent trae datos adjuntos (lo que significa que venimos a Editar)
-        lecturaIdEditar = intent.getStringExtra("lecturaId")
+        // Revisamos si el Intent trae datos adjuntos para Modo Edición
+        registroIdEditar = intent.getStringExtra("registroId")
 
-        if (lecturaIdEditar != null) {
+        if (registroIdEditar != null) {
             // MODO EDITAR
-            txtTituloFormulario.text = "Editar Lectura"
-            // Llenamos los campos con los datos actuales que nos enviaron
-            edtDescripcion.setText(intent.getStringExtra("lecturaDescripcion"))
-            val valor = intent.getDoubleExtra("lecturaValor", 0.0)
-            edtValor.setText(valor.toString())
+            txtTituloFormulario.text = "Editar Registro Invernadero"
+            edtUbicacion.setText(intent.getStringExtra("registroUbicacion"))
+            val temp = intent.getDoubleExtra("registroTemperatura", 0.0)
+            val hum = intent.getDoubleExtra("registroHumedad", 0.0)
+            edtTemperatura.setText(temp.toString())
+            edtHumedad.setText(hum.toString())
         } else {
             // MODO CREAR
-            txtTituloFormulario.text = "Nueva Lectura"
+            txtTituloFormulario.text = "Nuevo Registro Invernadero"
         }
     }
 
-    fun onGuardarLecturaClick(view: View) {
-        val descripcion = edtDescripcion.text.toString()
-        val valorString = edtValor.text.toString()
+    fun onGuardarRegistroClick(view: View) {
+        val ubicacion = edtUbicacion.text.toString().trim()
+        val tempString = edtTemperatura.text.toString().trim()
+        val humString = edtHumedad.text.toString().trim()
 
-        if (descripcion.isEmpty() || valorString.isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+        // 1. Validaciones para evitar guardar si hay campos vacíos
+        if (ubicacion.isEmpty()) {
+            edtUbicacion.error = "La ubicación o sector es obligatoria"
+            edtUbicacion.requestFocus()
             return
         }
 
-        val valorDouble = valorString.toDoubleOrNull()
-        if (valorDouble == null) {
-            Toast.makeText(this, "El valor ingresado no es válido", Toast.LENGTH_SHORT).show()
+        if (tempString.isEmpty()) {
+            edtTemperatura.error = "La temperatura es obligatoria"
+            edtTemperatura.requestFocus()
             return
         }
 
-        if (lecturaIdEditar != null) {
-            // MODO EDITAR: Usamos el ID existente para SOBREESCRIBIR el documento en Firebase
-            val lecturaActualizada = Lectura(id = lecturaIdEditar!!, descripcion = descripcion, valor = valorDouble)
-            
-            db.collection("lecturas").document(lecturaIdEditar!!)
-                .set(lecturaActualizada) // .set() reemplaza los datos del documento
+        if (humString.isEmpty()) {
+            edtHumedad.error = "La humedad es obligatoria"
+            edtHumedad.requestFocus()
+            return
+        }
+
+        // 2. Validación de conversión numérica
+        val temperatura = tempString.toDoubleOrNull()
+        if (temperatura == null) {
+            edtTemperatura.error = "Ingresa un número decimal válido"
+            edtTemperatura.requestFocus()
+            return
+        }
+
+        val humedad = humString.toDoubleOrNull()
+        if (humedad == null || humedad < 0.0 || humedad > 100.0) {
+            edtHumedad.error = "Ingresa una humedad válida entre 0% y 100%"
+            edtHumedad.requestFocus()
+            return
+        }
+
+        // 3. Persistencia en la colección 'registros_invernadero' en Firestore
+        if (registroIdEditar != null) {
+            // MODO EDITAR: Reemplaza los datos del documento existente
+            val registroActualizado = RegistroInvernadero(
+                id = registroIdEditar!!,
+                ubicacion = ubicacion,
+                temperatura = temperatura,
+                humedad = humedad
+            )
+
+            db.collection("registros_invernadero")
+                .document(registroIdEditar!!)
+                .set(registroActualizado)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Lectura actualizada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Registro actualizado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error al actualizar: ${e.message}", Toast.LENGTH_LONG).show()
                 }
         } else {
-            // MODO CREAR: No enviamos ID, usamos .add() para que Firestore lo cree
-            val nuevaLectura = Lectura(descripcion = descripcion, valor = valorDouble)
+            // MODO CREAR: Añade un nuevo documento
+            val nuevoRegistro = RegistroInvernadero(
+                ubicacion = ubicacion,
+                temperatura = temperatura,
+                humedad = humedad
+            )
 
-            db.collection("lecturas")
-                .add(nuevaLectura)
+            db.collection("registros_invernadero")
+                .add(nuevoRegistro)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Lectura guardada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Registro guardado exitosamente", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 .addOnFailureListener { e ->

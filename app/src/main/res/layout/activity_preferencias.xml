@@ -1,54 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Contenedor principal ConstraintLayout para organizar la pantalla de Preferencias -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreferenciasActivity">
+    android:padding="24dp"
+    tools:context=".views.PreferenciasActivity">
 
-    <!-- Título de la pantalla de Preferencias centrado en la parte superior -->
+    <!-- Título de la pantalla de Preferencias -->
     <TextView
         android:id="@+id/txtTituloPreferencias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Preferencias"
+        android:text="Preferencias de Ventilación"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Contenedor lineal vertical de ancho completo ubicado debajo del título -->
+    <!-- Contenedor vertical de opciones -->
     <LinearLayout
         android:id="@+id/layoutPreferencias"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTituloPreferencias">
 
-        <!-- Switch para activar o desactivar la recepción de notificaciones -->
+        <!-- Switch para activar o desactivar la ventilación automática -->
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/swNotificaciones"
+            android:id="@+id/swVentilacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recibir notificaciones"
+            android:text="Activar ventilación automática"
             android:textSize="16sp" />
 
-        <!-- Selector desplegable (Spinner) para elegir el idioma preferido -->
-        <Spinner
-            android:id="@+id/spIdioma"
+        <TextView
+            android:id="@+id/lblSector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:entries="@array/idiomas"
+            android:layout_marginTop="24dp"
+            android:text="Sector asignado para ventilación:"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Spinner con opciones de sectores del invernadero -->
+        <Spinner
+            android:id="@+id/spSector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:entries="@array/sectores_invernadero"
             android:minHeight="48dp" />
 
     </LinearLayout>

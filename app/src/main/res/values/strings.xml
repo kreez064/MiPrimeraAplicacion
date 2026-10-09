@@ -2,15 +2,18 @@
     <!-- Nombre de la aplicación -->
     <string name="app_name">control invernadero</string>
 
-    <!-- Lista de idiomas disponibles para la selección de preferencias del usuario -->
+    <!-- Sectores del invernadero para configuración y registros -->
+    <string-array name="sectores_invernadero">
+        <item>Sector Norte</item>
+        <item>Sector Sur</item>
+        <item>Almácigos</item>
+    </string-array>
+
+    <!-- Lista de idiomas disponibles -->
     <string-array name="idiomas">
-        <!-- Opción de idioma Español -->
         <item>Español</item>
-        <!-- Opción de idioma Inglés -->
         <item>Inglés</item>
-        <!-- Opción de idioma Italiano -->
         <item>Italiano</item>
-        <!-- Opción de idioma Portugués -->
         <item>Portugues</item>
     </string-array>
 </resources>
