@@ -8,13 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Logo centrado en la parte superior -->
+    <!-- Incremento 1: Logo de INACAP centrado en la parte superior -->
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/logo_invernadero"
+        android:src="@drawable/logo_inacap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

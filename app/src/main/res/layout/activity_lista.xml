@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <!-- Logo centrado en la parte superior -->
+    <!-- Logo de INACAP centrado en la parte superior -->
     <ImageView
         android:id="@+id/imgLogoLista"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/logo_invernadero"
+        android:src="@drawable/logo_inacap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
